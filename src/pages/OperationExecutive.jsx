@@ -15,7 +15,7 @@ const OperationExecutive = () => {
           { to: "./candidate-profiles", label: "Candidate's Profiles" },
         ]}
       />
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="max-w-7xl pt-16 mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <Routes>
             <Route path="/" element={<ActivePosition />} />

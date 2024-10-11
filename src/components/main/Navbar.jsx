@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-export default function Navbar({menuItems}) {
+export default function Navbar({ menuItems }) {
   const [isOpen, setIsOpen] = useState(false);
 
-//   { menuItems }
+  //   { menuItems }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -20,7 +20,7 @@ export default function Navbar({menuItems}) {
   // ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm">
+    <nav className="bg-white border-b fixed w-full top-0 border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">

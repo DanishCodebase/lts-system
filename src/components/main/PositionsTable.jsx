@@ -21,28 +21,37 @@ import { Eye, Plus, List } from "lucide-react";
 //   },
 // ];
 
-export default function PositionsTable({ approvedpositions }) {
+export default function PositionsTable({
+  approvedpositions,
+  heading = "Active Positions Status",
+  btn1 = "Create new Position",
+  link1 = "/sales/add-position",
+  btn2 = "View All Positions",
+  link2 = "/sales/all-positions",
+}) {
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">Active Positions Status</h2>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
-            size="sm"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Create new Position
-          </Button>
-          <Link to="/sales/all-positions">
+      <div className="xs:flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold">{heading}</h2>
+        <div className="space-x-2 my-5 xs:my-0">
+          <Link to={link1}>
+            <Button
+              variant="outline"
+              className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
+              size="sm"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              {btn1}
+            </Button>
+          </Link>
+          <Link to={link2}>
             <Button
               variant="outline"
               className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
               size="sm"
             >
               <List className="h-4 w-4 mr-2" />
-              View All Positions
+              {btn2}
             </Button>
           </Link>
         </div>

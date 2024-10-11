@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -10,15 +10,18 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Eye, Plus, List } from "lucide-react";
+import { positionsContext } from "@/context/PositionContext";
 
 const IndividualClient = () => {
-  const positionsData = [
-    {
-      id: "PHP DEVELOPER",
-      activeDate: "05/08/2024",
-      closeDate: "10/08/2024",
-    },
-  ];
+  const { id } = useParams();
+
+  const positionsData = useContext(positionsContext);
+
+  const clientPosition = positionsData.filter(
+    (pos) => !pos.disapproved && pos.clientId == id
+  );
+
+  console.log(clientPosition);
 
   return (
     <>
@@ -52,15 +55,15 @@ const IndividualClient = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {positionsData.map((position) => (
-            <TableRow key={position.id}>
-              <TableCell className="font-medium">{position.id}</TableCell>
+          {clientPosition.map((position, idx) => (
+            <TableRow key={idx}>
+              <TableCell className="font-medium">{position.skill_name}</TableCell>
               {/* <TableCell>
                   <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     {position.status}
                   </span>
                 </TableCell> */}
-              <TableCell>{position.activeDate}</TableCell>
+              <TableCell>{position.created_at}</TableCell>
               <TableCell>{position.closeDate}</TableCell>
               {/* <TableCell>
                   <Link to="/profile-detail">

@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react"; 
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // For navigation after login
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { URLContext } from "@/context/UrlContext";
 
-const Login = ({url="https://cyan-hamster-479122.hostingersite.com/"}) => {
+const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // To handle errors
   const navigate = useNavigate(); // To navigate after login
+  const url = useContext(URLContext);
 
-  
   const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000; // 1 day in milliseconds
 
   // Check if the token is valid
