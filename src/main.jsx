@@ -5,13 +5,16 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import UrlContext from "./context/UrlContext.jsx";
 import PositionContext from "./context/PositionContext.jsx";
+import ClientContext from "./context/ClientContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <UrlContext>
         <PositionContext>
-          <App />
+          <ClientContext>
+            <App />
+          </ClientContext>
         </PositionContext>
       </UrlContext>
     </BrowserRouter>

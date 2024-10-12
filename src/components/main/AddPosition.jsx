@@ -4,8 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { URLContext } from "@/context/UrlContext";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { clientContext } from "@/context/ClientContext";
 
 const AddPosition = () => {
+  // Array of clients to be displayed in the Select dropdown
+  // const clients = [
+  //   { id: 5, name: "Danish" },
+  //   { id: 3, name: "Fahad" },
+  //   { id: 2, name: "Yusuf" },
+  //   { id: 4, name: "Kaif" },
+  //   { id: 1, name: "Ehtasam" },
+  // ];
+
+  const clients = useContext(clientContext);
+
   // State to store form data
   const [formData, setFormData] = useState({
     clientId: "",
@@ -36,7 +56,7 @@ const AddPosition = () => {
       navigate("/"); // If no token, redirect to login
       return;
     }
-    
+
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -67,11 +87,28 @@ const AddPosition = () => {
           >
             Client
           </Label>
-          <Input
-            id="clientId"
+          <Select
             value={formData.clientId}
-            onChange={handleInputChange}
-          />
+            onValueChange={(value) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                clientId: value,
+              }))
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Client" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {clients.map((client, idx) => (
+                  <SelectItem key={idx} value={client.clientId.toString()}>
+                    {client.company}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="mb-4">
           <Label

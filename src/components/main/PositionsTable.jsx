@@ -56,7 +56,7 @@ export default function PositionsTable({
           </Link>
         </div>
       </div>
-      <Table>
+      <Table className="text-base font-normal">
         <TableHeader>
           <TableRow>
             <TableHead>Position ID</TableHead>

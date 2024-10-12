@@ -1,38 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
-import { URLContext } from "@/context/UrlContext";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { clientContext } from "@/context/ClientContext";
 
 const Clients = () => {
-  const [clients, setClients] = useState([]);
-  const navigate = useNavigate();
-  const url = useContext(URLContext);
-
-  useEffect(() => {
-    const fetchClients = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        navigate("/"); // If no token, redirect to login
-        return;
-      }
-
-      try {
-        const res = await axios.get(url + "api/v1/client", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Attach token to request
-          },
-        });
-        setClients(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchClients();
-  }, [navigate]);
+  const clients = useContext(clientContext);
 
   return (
     <>
