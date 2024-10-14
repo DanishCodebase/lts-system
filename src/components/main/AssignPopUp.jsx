@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -14,8 +15,44 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { URLContext } from "@/context/UrlContext";
 
 const AssignPopUp = () => {
+  const [salesPersons, setSalesPersons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const url = useContext(URLContext);
+
+  // Fetch data from API using async/await when the component mounts
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/"); // If no token, redirect to login
+      return;
+    }
+
+    const fetchSalesPersons = async () => {
+      try {
+        const response = await axios.get(url + "api/v1/operations/sales", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to request
+          },
+        }); // Replace with your API endpoint
+        setSalesPersons(response.data);
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch sales persons");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSalesPersons();
+  }, []);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -29,21 +66,29 @@ const AssignPopUp = () => {
           <div className="grid gap-2">
             <form action="">
               <Select>
-                <SelectTrigger className="">
+                <SelectTrigger>
                   <SelectValue placeholder="Select a sales person" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel></SelectLabel>
-                    <SelectItem value="Danish(5)">Danish (5)</SelectItem>
-                    <SelectItem value="Fahad(3)">Fahad (3)</SelectItem>
-                    <SelectItem value="Yusuf(2)">Yusuf (2)</SelectItem>
-                    <SelectItem value="Kaif(3)">Kaif (3)</SelectItem>
-                    <SelectItem value="Ehtasam(1)">Ehtasam (1)</SelectItem>
+                    {loading ? (
+                      <SelectItem disabled>Loading...</SelectItem>
+                    ) : error ? (
+                      <SelectItem disabled>{error}</SelectItem>
+                    ) : (
+                      salesPersons.map((person, idx) => (
+                        <SelectItem key={idx} value={person.name}>
+                          {person.name}
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Button className="mt-3 w-full" type="submit">Assign</Button>
+              <Button className="mt-3 w-full" type="submit">
+                Assign
+              </Button>
             </form>
           </div>
         </div>

@@ -12,9 +12,11 @@ const Clients = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Client List</h2>
         <div className="space-x-2">
-          <Button className="bg-indigo-500 hover:bg-indigo-400" size="sm">
-            Add New Client
-          </Button>
+          <Link to="/sales/add-client">
+            <Button className="bg-indigo-500 hover:bg-indigo-400" size="sm">
+              Add New Client
+            </Button>
+          </Link>
         </div>
       </div>
       <Table className="border">

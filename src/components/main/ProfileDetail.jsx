@@ -1,14 +1,16 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import CandidatePopUp from "./CandidatePopUp";
 
 const ProfileDetail = () => {
+  const { id } = useParams();
+
   return (
     <>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">050824 PHP DEVELOPER @ SJ</h2>
+        <h2 className="text-lg font-semibold">{id}</h2>
         <div className="space-x-2">
           <Button className="bg-indigo-500 hover:bg-indigo-400" size="sm">
             Send All Profiles to Client

@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import AddCandidate from "./AddCandidate";
+import { Plus, List } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CandidateProfiles = () => {
@@ -14,13 +14,25 @@ const CandidateProfiles = () => {
           </h2>
           <p>050824 PHP DEVELOPER @ SJ</p>
         </div>
-        <div className="space-x-2">
+        <div className="space-x-2 my-10 xs:my-0">
           <Link to="/operationex/add-candidate">
             <Button
               variant="outline"
               className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
+              size="sm"
             >
-              Add New Profile
+              <Plus className="h-4 w-4 mr-2" />
+              Submit New Profile
+            </Button>
+          </Link>
+          <Link to="/operationex/candidate-profiles">
+            <Button
+              variant="outline"
+              className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
+              size="sm"
+            >
+              <List className="h-4 w-4 mr-2" />
+              View All Submissions
             </Button>
           </Link>
         </div>

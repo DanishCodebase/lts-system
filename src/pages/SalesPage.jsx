@@ -1,3 +1,4 @@
+import AddClient from "@/components/main/AddClient";
 import AddPosition from "@/components/main/AddPosition";
 import Clients from "@/components/main/Clients";
 import IndividualClient from "@/components/main/IndividualClient";
@@ -55,9 +56,10 @@ const SalesPage = () => {
               element={<PositionsTable approvedpositions={approvedpositions} />}
             />
             <Route path="clients" element={<Clients />} />
-            <Route path="profile" element={<ProfileDetail />} />
+            <Route path="position/:id" element={<ProfileDetail />} />
             <Route path="client/:id" element={<IndividualClient />} />
             <Route path="add-position" element={<AddPosition />} />
+            <Route path="add-client" element={<AddClient />} />
           </Routes>
         </div>
       </main>

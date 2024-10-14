@@ -23,47 +23,47 @@ import { Eye, Plus, List } from "lucide-react";
 
 export default function PositionsTable({
   approvedpositions,
-  heading = "Active Positions Status",
-  btn1 = "Create new Position",
-  link1 = "/sales/add-position",
-  btn2 = "View All Positions",
-  link2 = "/sales/all-positions",
+  // heading = "Active Positions Status",
+  // btn1 = "Create new Position",
+  // link1 = "/sales/add-position",
+  // btn2 = "View All Positions",
+  // link2 = "/sales/all-positions",
 }) {
   return (
     <>
       <div className="xs:flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">{heading}</h2>
-        <div className="space-x-2 my-5 xs:my-0">
-          <Link to={link1}>
+        <h2 className="text-lg font-semibold">Active Positions Status</h2>
+        <div className="space-x-2 my-10 xs:my-0">
+          <Link to="/sales/add-position">
             <Button
               variant="outline"
               className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
               size="sm"
             >
               <Plus className="h-4 w-4 mr-2" />
-              {btn1}
+              Create new Position
             </Button>
           </Link>
-          <Link to={link2}>
+          <Link to="/sales/all-positions">
             <Button
               variant="outline"
               className="text-indigo-500 hover:text-indigo-400 hover:bg-white border-indigo-500"
               size="sm"
             >
               <List className="h-4 w-4 mr-2" />
-              {btn2}
+              View All Positions
             </Button>
           </Link>
         </div>
       </div>
-      <Table className="text-base font-normal">
+      <Table className="text-base font-normal text-nowrap">
         <TableHeader>
           <TableRow>
             <TableHead>Position ID</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Profile Submitted</TableHead>
-            <TableHead>Pending Screening</TableHead>
             <TableHead>Profiles Sent to Client</TableHead>
+            <TableHead>Pending Screening</TableHead>
             <TableHead className="w-[50px]"></TableHead>
           </TableRow>
         </TableHeader>
@@ -79,12 +79,12 @@ export default function PositionsTable({
                 </span>
               </TableCell>
               <TableCell>{position.profile_submitted}</TableCell>
-              <TableCell>{position.pendingScreening}</TableCell>
               <TableCell>{position.profile_sent}</TableCell>
+              <TableCell>{position.pendingScreening}</TableCell>
               <TableCell>
-                <Link to="/sales/profile">
-                  <Button variant="ghost" size="sm">
-                    <Eye className="h-4 w-4" />
+                <Link to={"/sales/position/" + position.positionId}>
+                  <Button className="bg-green-500 hover:bg-green-400" size="sm">
+                    <Eye className="h-5 w-5" />
                   </Button>
                 </Link>
               </TableCell>

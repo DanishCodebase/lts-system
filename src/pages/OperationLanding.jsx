@@ -13,18 +13,23 @@ const OperationLanding = () => {
 
   return (
     <div className="min-h-screen pt-16 bg-gray-50">
-      <Navbar menuItems={[{ to: "/", label: "Home" }]} />
+      <Navbar
+        menuItems={[
+          { to: "/", label: "Home" },
+          { to: "/operationex", label: "Operation Ex" },
+        ]}
+      />
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          {/* <NewPosition /> */}
-          <PositionsTable
+          <NewPosition approvedpositions={newpositions} />
+          {/* <PositionsTable
             approvedpositions={newpositions}
             heading="New Positions"
             btn1="Submit Profile"
             link1="/operations/submit-profile"
             btn2="View All Submissions"
             link2="/operations/view-all-submissions"
-          />
+          /> */}
         </div>
       </main>
     </div>

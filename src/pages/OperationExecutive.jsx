@@ -11,7 +11,7 @@ const OperationExecutive = () => {
       <Navbar
         menuItems={[
           { to: "./dashboard", label: "Dashboard" },
-          { to: "./active-position", label: "Active Position" },
+          // { to: "./active-position", label: "Active Position" },
           { to: "./candidate-profiles", label: "Candidate's Profiles" },
         ]}
       />
