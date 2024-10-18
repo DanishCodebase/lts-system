@@ -1,4 +1,4 @@
-// src/components/PositionsTable.jsx
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -13,24 +13,25 @@ import { Plus, List } from "lucide-react";
 import RejectPopUp from "./RejectPopUp";
 import AssignPopUp from "./AssignPopUp";
 
-// const positionsData = [
-//   {
-//     id: "050824 PHP DEVELOPER @ SJ",
-//     status: "On Process",
-//     profileSubmitted: 4,
-//     pendingScreening: 2,
-//     profilesSent: 0,
-//   },
-// ];
+export default function PositionsTable({ approvedpositions }) {
+  const [positions, setPositions] = useState([]);
 
-export default function PositionsTable({
-  approvedpositions,
-  // heading = "New Positions",
-  // btn1 = "Submit Profile",
-  // link1 = "/operations/submit-profile",
-  // btn2 = "View All Submissions",
-  // link2 = "/operations/view-all-submissions",
-}) {
+  // Use useEffect to update the positions state when approvedpositions prop changes
+  useEffect(() => {
+    setPositions(approvedpositions);
+  }, [approvedpositions]);
+
+  // Function to update the position status when an action is performed
+  const updatePositionStatus = (updatedPosition) => {
+    setPositions((prevPositions) =>
+      prevPositions.map((position) =>
+        position.positionId === updatedPosition.positionId
+          ? { ...position, ...updatedPosition }
+          : position
+      )
+    );
+  };
+
   return (
     <>
       <div className="xs:flex justify-between items-center mb-4">
@@ -70,7 +71,7 @@ export default function PositionsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {approvedpositions.map((position, idx) => (
+          {positions.map((position, idx) => (
             <TableRow key={idx}>
               <TableCell className="font-medium">
                 {position.positionId}
@@ -84,13 +85,14 @@ export default function PositionsTable({
               <TableCell>{position.profile_sent}</TableCell>
               <TableCell>{position.pendingScreening}</TableCell>
               <TableCell>
-                {/* <Link to="/sales/profile">
-                  <Button className="bg-green-500 hover:bg-green-400" size="sm">
-                    <Eye className="h-5 w-5" />
-                  </Button>
-                </Link> */}
-                <AssignPopUp />
-                <RejectPopUp positionId={position.positionId} />
+                <AssignPopUp
+                  positionId={position.positionId}
+                  onUpdate={updatePositionStatus}
+                />
+                <RejectPopUp
+                  positionId={position.positionId}
+                  onUpdate={updatePositionStatus}
+                />
               </TableCell>
             </TableRow>
           ))}
@@ -99,65 +101,3 @@ export default function PositionsTable({
     </>
   );
 }
-
-// import React from "react";
-// import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-// import { Button } from "@/components/ui/button";
-// import AssignPopUp from "./AssignPopUp";
-// import RejectPopUp from "./RejectPopUp";
-// import { Link } from "react-router-dom";
-
-// const newPosition = [
-//   {
-//     id: "050824 PHP DEVELOPER @ SJ",
-//     status: "On Process",
-//     profileSubmitted: 4,
-//     pendingScreening: 2,
-//     profilesSent: 0,
-//     status: true, //status true means it has been aproved false means not
-//   },
-// ];
-
-// const NewPosition = () => {
-//   return (
-//     <>
-//       <h2 className="text-lg mb-5 font-semibold">New Positions</h2>
-//       <Table className="border">
-//         <TableBody>
-//           <TableRow>
-//             <TableCell className="font-medium">
-//               050824 PHP DEVELOPER @ SJ
-//             </TableCell>
-//             <TableCell className="text-right">
-//               <AssignPopUp />
-//               <RejectPopUp />
-//             </TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell className="font-medium">
-//               050824 JAVA DEVELOPER @ TS
-//             </TableCell>
-//             <TableCell className="text-right">
-//               <AssignPopUp />
-//               <RejectPopUp />
-//             </TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell className="font-medium">
-//               050824 GRAPHIC DESIGNER @ TS
-//             </TableCell>
-//             <TableCell className="text-right">
-//               <Link to={"/operationex"}>
-//                 <Button className="bg-indigo-500 hover:bg-indigo-400">
-//                   View
-//                 </Button>
-//               </Link>
-//             </TableCell>
-//           </TableRow>
-//         </TableBody>
-//       </Table>
-//     </>
-//   );
-// };
-
-// export default NewPosition;

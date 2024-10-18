@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import IndividualCanditate from "@/components/main/IndividualCandidate";
+import axios from "axios";
+import { candidatesContext } from "@/context/CandidateContext";
 // import CandidatePopUp from "./CandidatePopUp";
 
 const ProfileDetail = () => {
   const { id } = useParams();
+
+  const candidates = useContext(candidatesContext);
+
+  const poscandi = candidates.filter(
+    (candidate) => candidate.currentPosition == id
+  );
 
   return (
     <>
@@ -19,20 +28,19 @@ const ProfileDetail = () => {
       </div>
       <Table className="border">
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Fahad</TableCell>
-            <TableCell className="font-medium text-center">
-              Interview Scheduled
-            </TableCell>
-            <TableCell className="text-right">
-              <Link to="">
-                <Button className="bg-indigo-500 hover:bg-indigo-400" size="sm">
-                  View Profile
-                </Button>
-              </Link>
-            </TableCell>
-          </TableRow>
-          <TableRow>
+          {poscandi.map((candidate, idx) => (
+            <TableRow key={idx}>
+              <TableCell className="font-medium">{candidate.name}</TableCell>
+              <TableCell className="font-medium text-center">
+                {candidate.status}
+              </TableCell>
+              <TableCell className="text-right">
+                <IndividualCanditate candidate={candidate} />
+              </TableCell>
+            </TableRow>
+          ))}
+
+          {/* <TableRow>
             <TableCell className="font-medium">Danish</TableCell>
             <TableCell className="font-medium text-center">
               Feedback Awaited
@@ -51,12 +59,12 @@ const ProfileDetail = () => {
               Added to top profile
             </TableCell>
             <TableCell className="text-right">
-              {/* <CandidatePopUp /> */}
+              <CandidatePopUp />
               <Button className="bg-indigo-500 hover:bg-indigo-400" size="sm">
                 View Profile
               </Button>
             </TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </>

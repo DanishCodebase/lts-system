@@ -1,17 +1,18 @@
+import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { URLContext } from "./UrlContext";
-import axios from "axios";
 
-export const positionsContext = createContext();
+export const candidatesContext = createContext();
 
-const PositionContext = ({ children }) => {
-  const url = useContext(URLContext);
-  const [positionsData, setPositionsData] = useState([]);
+const CandidateContext = ({ children }) => {
+  const [candidatesData, setCandidatesData] = useState([]);
   const navigate = useNavigate();
+  const url = useContext(URLContext);
+  //   console.log(url);
 
   useEffect(() => {
-    const fetchPositions = async () => {
+    const fetchCandidates = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -21,31 +22,29 @@ const PositionContext = ({ children }) => {
 
       try {
         const res = await axios.get(
-          url + "api/v1/positions?orderBy=newestFirst",
+          url + "api/v1/candidate", // Assuming the endpoint is for candidates
           {
             headers: {
               Authorization: `Bearer ${token}`, // Attach token to request
             },
           }
         );
-        setPositionsData(res.data.positions);
-        // console.log(res.data.positions);
+        setCandidatesData(res.data); // Assuming the response contains candidates data
+        console.log(candidatesData);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchPositions();
+    fetchCandidates();
   }, [navigate]);
-
-  // console.log(positionsData);
 
   return (
     <>
-      <positionsContext.Provider value={positionsData}>
+      <candidatesContext.Provider value={candidatesData}>
         {children}
-      </positionsContext.Provider>
+      </candidatesContext.Provider>
     </>
   );
 };
 
-export default PositionContext;
+export default CandidateContext;

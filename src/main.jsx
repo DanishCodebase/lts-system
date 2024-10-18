@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import UrlContext from "./context/UrlContext.jsx";
 import PositionContext from "./context/PositionContext.jsx";
 import ClientContext from "./context/ClientContext.jsx";
+import CandidateContext from "./context/CandidateContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -13,7 +14,9 @@ createRoot(document.getElementById("root")).render(
       <UrlContext>
         <PositionContext>
           <ClientContext>
-            <App />
+            <CandidateContext>
+              <App />
+            </CandidateContext>
           </ClientContext>
         </PositionContext>
       </UrlContext>

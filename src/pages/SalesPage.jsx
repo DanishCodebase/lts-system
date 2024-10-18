@@ -1,6 +1,7 @@
 import AddClient from "@/components/main/AddClient";
 import AddPosition from "@/components/main/AddPosition";
 import Clients from "@/components/main/Clients";
+import IndividualCandidate from "@/components/main/IndividualCandidate";
 import IndividualClient from "@/components/main/IndividualClient";
 import Interviews from "@/components/main/Interviews";
 import Navbar from "@/components/main/Navbar";
@@ -13,8 +14,10 @@ import { Routes, Route } from "react-router-dom";
 const SalesPage = () => {
   const positions = useContext(positionsContext);
 
+  // console.log(positions);
+
   const approvedpositions = positions.filter(
-    (pos) => !pos.disapproved && pos.active
+    (pos) => !pos.disapproved && pos.status === "ACTIVE"
   );
 
   // const approvedpositionall = positionsData.filter(
@@ -38,7 +41,10 @@ const SalesPage = () => {
               element={
                 <>
                   <Interviews />
-                  <PositionsTable approvedpositions={approvedpositions} />
+                  <PositionsTable
+                    approvedpositions={approvedpositions}
+                    hidden="hidden"
+                  />
                 </>
               }
             />
@@ -47,19 +53,26 @@ const SalesPage = () => {
               element={
                 <>
                   <Interviews />
-                  <PositionsTable approvedpositions={approvedpositions} />
+                  <PositionsTable
+                    approvedpositions={approvedpositions}
+                    hidden="hidden"
+                  />
                 </>
               }
             />
             <Route
               path="all-positions"
-              element={<PositionsTable approvedpositions={approvedpositions} />}
+              element={<PositionsTable approvedpositions={positions} />}
             />
             <Route path="clients" element={<Clients />} />
             <Route path="position/:id" element={<ProfileDetail />} />
             <Route path="client/:id" element={<IndividualClient />} />
             <Route path="add-position" element={<AddPosition />} />
             <Route path="add-client" element={<AddClient />} />
+            <Route
+              path="individual-candidate"
+              element={<IndividualCandidate />}
+            />
           </Routes>
         </div>
       </main>

@@ -7,9 +7,9 @@ import { positionsContext } from "@/context/PositionContext";
 const OperationLanding = () => {
   const positions = useContext(positionsContext);
 
-  const newpositions = positions.filter(
-    (pos) => !pos.disapproved && !pos.active
-  );
+  // const newpositions = positions.filter(
+  //   (pos) => !pos.disapproved && !pos.active
+  // );
 
   return (
     <div className="min-h-screen pt-16 bg-gray-50">
@@ -21,7 +21,7 @@ const OperationLanding = () => {
       />
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <NewPosition approvedpositions={newpositions} />
+          <NewPosition approvedpositions={positions} />
           {/* <PositionsTable
             approvedpositions={newpositions}
             heading="New Positions"

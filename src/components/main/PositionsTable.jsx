@@ -1,4 +1,4 @@
-// src/components/PositionsTable.jsx
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -10,30 +10,70 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Eye, Plus, List } from "lucide-react";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "@/components/ui/select"; // Ensure the correct import path for your Select component
 
-// const positionsData = [
-//   {
-//     id: "050824 PHP DEVELOPER @ SJ",
-//     status: "On Process",
-//     profileSubmitted: 4,
-//     pendingScreening: 2,
-//     profilesSent: 0,
-//   },
-// ];
+export default function PositionsTable({ approvedpositions, hidden }) {
+  const [selectedStatus, setSelectedStatus] = useState("All"); // Default to "All"
 
-export default function PositionsTable({
-  approvedpositions,
-  // heading = "Active Positions Status",
-  // btn1 = "Create new Position",
-  // link1 = "/sales/add-position",
-  // btn2 = "View All Positions",
-  // link2 = "/sales/all-positions",
-}) {
+  // Function to determine the color class based on the status
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "CLOSED":
+        return "bg-yellow-500 text-white";
+      case "ACTIVE":
+        return "bg-green-500 text-white";
+      case "DISAPPROVED":
+        return "bg-red-500 text-white";
+      case "WAITING_FOR_APPROVAL":
+        return "bg-blue-500 text-white";
+      default:
+        return "bg-gray-500 text-white";
+    }
+  };
+
+  // Filtered positions based on selected status
+  const filteredPositions =
+    selectedStatus === "All"
+      ? approvedpositions
+      : approvedpositions.filter(
+          (position) => position.status === selectedStatus
+        );
+
   return (
     <>
       <div className="xs:flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Active Positions Status</h2>
-        <div className="space-x-2 my-10 xs:my-0">
+        <div className="flex space-x-4 items-center my-10 xs:my-0">
+          {/* ShadCN Select component for status filter */}
+          <Select
+            value={selectedStatus}
+            onValueChange={(value) => setSelectedStatus(value)}
+          >
+            <SelectTrigger className={`${hidden} w-[200px]`}>
+              <SelectValue placeholder="Select a status" defaultValue="All" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Status</SelectLabel>
+                <SelectItem value="All">All</SelectItem>
+                <SelectItem value="ACTIVE">Active</SelectItem>
+                <SelectItem value="CLOSED">Closed</SelectItem>
+                <SelectItem value="DISAPPROVED">Disapproved</SelectItem>
+                <SelectItem value="WAITING_FOR_APPROVAL">
+                  Waiting for Approval
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
           <Link to="/sales/add-position">
             <Button
               variant="outline"
@@ -68,13 +108,17 @@ export default function PositionsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {approvedpositions.map((position, idx) => (
+          {filteredPositions.map((position, idx) => (
             <TableRow key={idx}>
               <TableCell className="font-medium">
                 {position.positionId}
               </TableCell>
               <TableCell>
-                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                <span
+                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(
+                    position.status
+                  )}`}
+                >
                   {position.status}
                 </span>
               </TableCell>
@@ -82,7 +126,7 @@ export default function PositionsTable({
               <TableCell>{position.profile_sent}</TableCell>
               <TableCell>{position.pendingScreening}</TableCell>
               <TableCell>
-                <Link to={"/sales/position/" + position.positionId}>
+                <Link to={`/sales/position/${position.positionId}`}>
                   <Button className="bg-green-500 hover:bg-green-400" size="sm">
                     <Eye className="h-5 w-5" />
                   </Button>

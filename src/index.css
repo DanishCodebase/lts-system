@@ -16,6 +16,11 @@ option {
   font-weight: normal !important;
 }
 
+.candidate-dialog button {
+  right: 2.25rem!important;
+  top: 2.25rem!important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
