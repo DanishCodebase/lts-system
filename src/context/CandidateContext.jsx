@@ -30,7 +30,7 @@ const CandidateContext = ({ children }) => {
           }
         );
         setCandidatesData(res.data); // Assuming the response contains candidates data
-        console.log(candidatesData);
+        // console.log(candidatesData);
       } catch (error) {
         console.error(error);
       }
