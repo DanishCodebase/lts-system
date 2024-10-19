@@ -4,16 +4,16 @@ import { Plus, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-const newPosition = [
-  {
-    id: "050824 PHP DEVELOPER @ SJ",
-    status: "On Process",
-    profileSubmitted: 4,
-    pendingScreening: 2,
-    profilesSent: 0,
-    status: true, //status true means it has been aproved false means not
-  },
-];
+// const newPosition = [
+//   {
+//     id: "050824 PHP DEVELOPER @ SJ",
+//     status: "On Process",
+//     profileSubmitted: 4,
+//     pendingScreening: 2,
+//     profilesSent: 0,
+//     status: true, //status true means it has been aproved false means not
+//   },
+// ];
 
 const ActivePosition = () => {
   return (
